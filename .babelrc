@@ -1,0 +1,29 @@
+{
+  "presets": [
+    "razzle/babel",
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic",
+        "importSource": "@emotion/react"
+      }
+    ]
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "@emotion"
+      ]
+    },
+    "development": {
+      "plugins": [
+        [
+          "@emotion",
+          {
+            "sourceMap": true
+          }
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "app",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "start": "razzle start",
+    "start:ip": "HOST=$(hostname -I | xargs) razzle start",
+    "build": "razzle build",
+    "test": "razzle test --env=jsdom",
+    "start:prod": "serve -s build/public"
+  },
+  "dependencies": {
+    "@emotion/babel-plugin": "^11.3.0",
+    "@emotion/react": "^11.1.5",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "eslint-plugin-jest": "^24.3.5",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "@emotion/eslint-plugin": "^11.2.0",
+    "babel-preset-razzle": "4.0.4",
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "html-webpack-plugin": "5.2.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "razzle": "4.0.4",
+    "razzle-dev-utils": "4.0.4",
+    "serve": "^11.3.2",
+    "webpack": "5.24.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

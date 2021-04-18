@@ -1,0 +1,80 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:jest/recommended",
+    "airbnb"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "jest",
+    "@emotion"
+  ],
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.test.jsx"
+      ],
+      "rules": {
+        "react/react-in-jsx-scope": "off"
+      }
+    }
+  ],
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          [
+            "@Components",
+            "./src/components"
+          ],
+          [
+            "@Constants",
+            "./src/constants"
+          ],
+          [
+            "@Contexts",
+            "./src/contexts"
+          ],
+          [
+            "@Hooks",
+            "./src/hooks"
+          ],
+          [
+            "@Pages",
+            "./src/pages"
+          ],
+          [
+            "@Tests",
+            "./src/tests"
+          ]
+        ],
+        "extensions": [
+          ".ts",
+          ".js",
+          ".jsx",
+          ".json"
+        ]
+      }
+    }
+  }
+}
