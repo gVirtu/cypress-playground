@@ -25,7 +25,24 @@
       "error",
       {
         "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^_"
+        "varsIgnorePattern": "^(_|jsx)"
+      }
+    ],
+    "react/prop-types": [
+      "error",
+      {
+        "ignore": [
+          "children"
+        ]
+      }
+    ],
+    "react/jsx-props-no-spreading": "warn",
+    "react/forbid-prop-types": [
+      "warn",
+      {
+        "forbid": [
+          "any"
+        ]
       }
     ]
   },
