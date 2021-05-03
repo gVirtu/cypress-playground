@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
@@ -10,7 +10,7 @@ import Game from '@Pages/Game';
 
 const Pages = () => (
   <ThemeProvider>
-    <Router>
+    <Router basename={process.env.ASSET_PATH || '/'}>
       <Switch>
         <Route exact path="/">
           <Home />

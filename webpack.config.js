@@ -1,5 +1,7 @@
 const path = require('path');
 
+const ASSET_PATH = process.env.ASSET_PATH || '/';
+
 module.exports = {
   mergeConfig(config) {
     return {
@@ -8,6 +10,10 @@ module.exports = {
         ...config.devServer,
         quiet: false,
         clientLogLevel: 'warn',
+      },
+      output: {
+        ...config.output,
+        publicPath: ASSET_PATH,
       },
       resolve: {
         ...config.resolve,
