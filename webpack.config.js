@@ -21,6 +21,7 @@ module.exports = {
           '@Components': path.resolve(__dirname, 'src/components/'),
           '@Constants': path.resolve(__dirname, 'src/constants/'),
           '@Contexts': path.resolve(__dirname, 'src/contexts/'),
+          '@Helpers': path.resolve(__dirname, 'src/helpers/'),
           '@Hooks': path.resolve(__dirname, 'src/hooks/'),
           '@Pages': path.resolve(__dirname, 'src/pages/'),
         },

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { css, jsx } from '@emotion/react';
 import { useForm } from "react-hook-form";
 import useTheme from '@Hooks/useTheme';
+import { mediaLargerThan } from '@Helpers/theme';
 import Minesweeper from '@Components/Minesweeper';
 import FormInput from '@Components/FormInput';
 
@@ -12,7 +13,7 @@ const Game = () => {
   const { watch, handleSubmit } = form;
 
   const [gameKey, setGameKey] = useState(new Date().getTime());
-  const [gameSize, setGameSize] = useState(5);
+  const [gameSize, setGameSize] = useState(6);
   const [gameMines, setGameMines] = useState(8);
 
   const formGameSize = watch("gameSize", gameSize);
@@ -26,11 +27,15 @@ const Game = () => {
   return (
     <div
       css={css`
-        padding: ${theme.spacing[2]}px;
+        padding: ${theme.spacing[1]}px;
         color: ${theme.textColor};
         background-color: ${theme.backgroundColor};
         font-size: 24px;
         border-radius: 4px;
+
+        ${mediaLargerThan('xs')} {
+          padding: ${theme.spacing[2]}px;
+        }
       `}
     >
       <h1>Minesweeper</h1>

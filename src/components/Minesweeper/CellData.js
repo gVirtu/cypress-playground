@@ -17,11 +17,11 @@ class CellData {
 
   props() {
     const {
-      mine, adjacentCount, clicked, flagged, clustered
+      mine, adjacentCount, clicked, flagged, clustered,
     } = this;
 
     return {
-      mine, adjacentCount, clicked, flagged, clustered
+      mine, adjacentCount, clicked, flagged, clustered,
     };
   }
 

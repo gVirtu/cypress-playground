@@ -73,6 +73,10 @@
             "./src/contexts"
           ],
           [
+            "@Helpers",
+            "./src/helpers"
+          ],
+          [
             "@Hooks",
             "./src/hooks"
           ],

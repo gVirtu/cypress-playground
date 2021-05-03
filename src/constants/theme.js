@@ -5,6 +5,12 @@ const BASE = {
     32,
     64,
   ],
+  breakpoints: {
+    xs: 576,
+    sm: 768,
+    md: 992,
+    lg: 1200,
+  },
 };
 
 export default {
