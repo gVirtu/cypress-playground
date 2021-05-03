@@ -14,14 +14,11 @@ const Minesweeper = (props) => {
   const [firstClick, setFirstClick] = useState(true);
 
   const setupBoard = () => {
-    let i;
-    let j;
-
     // Build the starting board state
     const newBoard = (Array.from(Array(size), () => new Array(size)));
 
-    for (i = 0; i < size; i++) {
-      for (j = 0; j < size; j++) {
+    for (let i = 0; i < size; i++) {
+      for (let j = 0; j < size; j++) {
         newBoard[i][j] = new CellData({});
       }
     }
@@ -39,13 +36,11 @@ const Minesweeper = (props) => {
   }, [correctFlagCount]);
 
   const positionMines = (clickRow, clickCol) => {
-    let i;
-    let j;
     let positions = [];
 
     // Build array with all positions in grid
-    for (i = 0; i < size; i++) {
-      for (j = 0; j < size; j++) {
+    for (let i = 0; i < size; i++) {
+      for (let j = 0; j < size; j++) {
         positions.push(JSON.stringify([i, j]));
       }
     }
@@ -62,17 +57,17 @@ const Minesweeper = (props) => {
         .slice(0, mines)
     );
 
+    const inBounds = (i, j) => (
+      (i >= 0) && (i < size) && (j >= 0) && (j < size)
+    );
+
     // Helper function to count adjacent mines given an empty position
-    const countAdjacency = (i, j) => {
-      let x;
-      let y;
+    const countAdjacency = (i, j, board, func) => {
       let count = 0;
 
-      for (x = i - 1; x <= i + 1; x++) {
-        for (y = j - 1; y <= j + 1; y++) {
-          const adjacent = JSON.stringify([x, y]);
-
-          if (mineSet.has(adjacent))
+      for (let x = i - 1; x <= i + 1; x++) {
+        for (let y = j - 1; y <= j + 1; y++) {
+          if (inBounds(x, y) && func(board, x, y))
             count++;
         }
       }
@@ -81,25 +76,52 @@ const Minesweeper = (props) => {
       return count;
     }
 
+    const adjacentToMine = (_board, x, y) => {
+      const adjacent = JSON.stringify([x, y]);
+
+      return mineSet.has(adjacent);
+    }
+
+    const adjacentToCluster = (board, x, y) => {
+      return (!board[x][y].hasMine() && board[x][y].getAdjacentCount() === 0)
+    }
+
     // Build the new board state
     const newBoard = board.map((row, i) => (
-      row.map((_cell, j) => {
+      row.map((_cell, j, board) => {
         const pos = JSON.stringify([i, j]);
         const hasMine = mineSet.has(pos);
-        const adjacentCount = (hasMine) ? (0) : (countAdjacency(i, j));
+        const adjacentCount = (hasMine) ? (0) : (countAdjacency(i, j, board, adjacentToMine));
 
         return new CellData({ mine: hasMine, adjacentCount });
       })
     ));
+
+    // Update board state with clustering data
+    for (let i = 0; i < size; i++) {
+      for (let j = 0; j < size; j++) {
+        const adjacentCount = countAdjacency(i, j, newBoard, adjacentToCluster);
+
+        if (adjacentCount > 0) {
+          newBoard[i][j] = new CellData({ ...newBoard[i][j].props(), clustered: true })
+        }
+      }
+    }
 
     setBoard(newBoard);
 
     return newBoard;
   }
 
-  const shouldReveal = (cell) => (
-    !cell.wasClicked() && !cell.hasMine() && !cell.wasFlagged()
-  );
+  const shouldReveal = (tempBoard, i, j) => {
+    const cell = tempBoard[i][j];
+    return (
+      !cell.wasClicked()
+      && !cell.hasMine()
+      && !cell.wasFlagged()
+      && cell.isClustered()
+    )
+  };
 
   const revealCell = (tempBoard, i, j) => {
     const cell = tempBoard[i][j];
@@ -110,16 +132,16 @@ const Minesweeper = (props) => {
       return;
     }
 
-    if (i > 0 && shouldReveal(tempBoard[i - 1][j])) {
+    if (i > 0 && shouldReveal(tempBoard, i - 1, j)) {
       revealCell(tempBoard, i - 1, j);
     }
-    if (j > 0 && shouldReveal(tempBoard[i][j - 1])) {
+    if (j > 0 && shouldReveal(tempBoard, i, j - 1)) {
       revealCell(tempBoard, i, j - 1);
     }
-    if (i < size - 1 && shouldReveal(tempBoard[i + 1][j])) {
+    if (i < size - 1 && shouldReveal(tempBoard, i + 1, j)) {
       revealCell(tempBoard, i + 1, j);
     }
-    if (j < size - 1 && shouldReveal(tempBoard[i][j + 1])) {
+    if (j < size - 1 && shouldReveal(tempBoard, i, j + 1)) {
       revealCell(tempBoard, i, j + 1);
     }
   }
