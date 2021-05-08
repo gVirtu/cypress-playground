@@ -84,7 +84,7 @@ const Minesweeper = (props) => {
     };
 
     const adjacentToCluster = (currentBoard, x, y) => (
-      !board[x][y].hasMine() && currentBoard[x][y].getAdjacentCount() === 0
+      !currentBoard[x][y].hasMine() && currentBoard[x][y].getAdjacentCount() === 0
     );
 
     // Build the new board state
