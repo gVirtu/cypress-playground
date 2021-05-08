@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { mediaLargerThan } from '@Helpers/theme';
+import useTheme from '@Hooks/useTheme';
 import CellContent from './CellContent';
 
 const COLORS = {
@@ -17,11 +19,17 @@ const COLORS = {
 const CellButton = styled.button`
   flex: 1;
   position: relative;
+  padding: 3px;
+  min-width: 40px;
 
   &:before {
     content: '';
     display: block;
     padding-top: 100%;
+  }
+
+  ${mediaLargerThan('xs')} {
+    padding: 6px;
   }
 `;
 
@@ -46,14 +54,21 @@ const Cell = (props) => {
   const {
     hasMine, clicked, flagged, adjacentCount, gameOver, victory, onClick, onRightClick,
   } = props;
+  const theme = useTheme();
 
   let content = '';
 
   if (clicked || (gameOver && hasMine)) {
     content = (adjacentCount > 0) ? (adjacentCount.toString()) : ('');
-    if (hasMine) content = (victory) ? '🌸' : '💣';
+
+    if (hasMine) {
+      if (victory || flagged) content = '🌸';
+      else if (clicked) content = '💥';
+      else content = '💣';
+    }
+
     return (
-      <ClickedCell>
+      <ClickedCell theme={theme}>
         <CellContent text={content} color={COLORS[content]} />
       </ClickedCell>
     );
@@ -61,7 +76,12 @@ const Cell = (props) => {
 
   if (flagged) content = '🚩';
   return (
-    <UnclickedCell disabled={gameOver} onClick={onClick} onContextMenu={onRightClick}>
+    <UnclickedCell
+      theme={theme}
+      disabled={gameOver}
+      onClick={onClick}
+      onContextMenu={onRightClick}
+    >
       <CellContent text={content} />
     </UnclickedCell>
   );
