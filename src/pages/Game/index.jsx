@@ -42,6 +42,10 @@ const Game = () => {
     setGameKey(new Date().getTime());
   };
 
+  const onRestartGame = () => {
+    setGameKey(new Date().getTime());
+  };
+
   return (
     <GameDiv theme={theme}>
       <h1>Minesweeper</h1>
@@ -49,6 +53,7 @@ const Game = () => {
         key={gameKey}
         size={gameSize}
         mines={gameMines}
+        handleRestart={onRestartGame}
       />
       <GameOptions theme={theme} onSubmit={handleSubmit(onConfigureGame)}>
         <FormInput

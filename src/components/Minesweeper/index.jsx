@@ -6,7 +6,7 @@ import CellData from './CellData';
 import Board from './Board';
 
 const Minesweeper = (props) => {
-  const { size, mines } = props;
+  const { size, mines, handleRestart } = props;
 
   const [board, setBoard] = useState([]);
   const [flagCount, setFlagCount] = useState(0);
@@ -256,6 +256,7 @@ const Minesweeper = (props) => {
       flagCount={flagCount}
       gameOver={gameOver}
       victory={victory}
+      handleRestart={handleRestart}
     >
       { renderBoard() }
       { renderGameMessage() }
@@ -266,6 +267,7 @@ const Minesweeper = (props) => {
 Minesweeper.propTypes = {
   size: PropTypes.number,
   mines: PropTypes.number,
+  handleRestart: PropTypes.func.isRequired,
 };
 
 Minesweeper.defaultProps = {

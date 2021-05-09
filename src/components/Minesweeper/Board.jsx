@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { jsx, css } from '@emotion/react';
 import useTheme from '@Hooks/useTheme';
 import { mediaLargerThan, spacing } from '@Helpers/theme';
 
@@ -24,9 +25,21 @@ const BoardHeader = styled.div`
 const BoardContent = styled.div`
 `;
 
+const HeaderFace = ({ children, ...props }) => (
+  <button
+    type="button"
+    css={css`
+      font-size: inherit;
+    `}
+    {...props}
+  >
+    {children}
+  </button>
+);
+
 const Board = (props) => {
   const {
-    gameOver, victory, flagCount, mines, children,
+    gameOver, victory, flagCount, mines, children, handleRestart,
   } = props;
   const theme = useTheme();
   const [mouseDown, setMouseDown] = useState(false);
@@ -67,9 +80,9 @@ const Board = (props) => {
           💣x
           {renderMines()}
         </div>
-        <div>
+        <HeaderFace onClick={handleRestart}>
           {renderFace()}
-        </div>
+        </HeaderFace>
         <div>
           🚩x
           {flagCount}
@@ -87,6 +100,7 @@ Board.propTypes = {
   victory: PropTypes.bool.isRequired,
   mines: PropTypes.number.isRequired,
   flagCount: PropTypes.number.isRequired,
+  handleRestart: PropTypes.func.isRequired,
 };
 
 export default Board;
